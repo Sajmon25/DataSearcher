@@ -11,13 +11,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Searcher(object):
     def setupUi(self, Searcher):
         Searcher.setObjectName("Searcher")
-        Searcher.resize(535, 222)
+        Searcher.resize(535, 410)
         self.centralwidget = QtWidgets.QWidget(Searcher)
         self.centralwidget.setObjectName("centralwidget")
-        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setGeometry(QtCore.QRect(20, 20, 381, 22))
-        self.lineEdit.setText("")
-        self.lineEdit.setObjectName("lineEdit")
+        self.Pattern = QtWidgets.QLineEdit(self.centralwidget)
+        self.Pattern.setGeometry(QtCore.QRect(20, 20, 381, 22))
+        self.Pattern.setText("")
+        self.Pattern.setObjectName("lineEdit")
         self.SearchButton = QtWidgets.QPushButton(self.centralwidget)
         self.SearchButton.setGeometry(QtCore.QRect(420, 20, 93, 28))
         self.SearchButton.setObjectName("SearchButton")
@@ -42,13 +42,18 @@ class Ui_Searcher(object):
         self.statusbar.setObjectName("statusbar")
         Searcher.setStatusBar(self.statusbar)
 
+        self.msg = QtWidgets.QPlainTextEdit(self.centralwidget)
+        self.msg.resize(490, 200)
+        self.msg.move(20, 180)
+        self.msg.setPlaceholderText('Results...')
+
         self.retranslateUi(Searcher)
         QtCore.QMetaObject.connectSlotsByName(Searcher)
 
     def retranslateUi(self, Searcher):
         _translate = QtCore.QCoreApplication.translate
         Searcher.setWindowTitle(_translate("Searcher", "MainWindow"))
-        self.lineEdit.setPlaceholderText(_translate("Searcher", "Pattern"))
+        self.Pattern.setPlaceholderText(_translate("Searcher", "Pattern"))
         self.SearchButton.setText(_translate("Searcher", "Search"))
         self.ReportsCheckBox.setText(_translate("Searcher", "Reports"))
         self.FormsCheckBox.setText(_translate("Searcher", "Forms"))

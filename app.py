@@ -12,7 +12,7 @@ class MainWindow(Ui_Searcher):
         self.SearchButton.clicked.connect(self.search)
 
     def search(self):
-        print("Searching...")
+        print("Searching..." + self.Pattern.text())
 
 
 if __name__ == '__main__':
