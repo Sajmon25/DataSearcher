@@ -28,9 +28,11 @@ class Ui_Searcher(object):
         self.ReportsCheckBox = QtWidgets.QCheckBox(self.groupBox)
         self.ReportsCheckBox.setGeometry(QtCore.QRect(20, 30, 81, 20))
         self.ReportsCheckBox.setObjectName("ReportsCheckBox")
+        self.ReportsCheckBox.setChecked(True)
         self.FormsCheckBox = QtWidgets.QCheckBox(self.groupBox)
         self.FormsCheckBox.setGeometry(QtCore.QRect(200, 30, 81, 20))
         self.FormsCheckBox.setObjectName("FormsCheckBox")
+        self.FormsCheckBox.setChecked(True)
         Searcher.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(Searcher)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 535, 26))
@@ -50,4 +52,3 @@ class Ui_Searcher(object):
         self.SearchButton.setText(_translate("Searcher", "Search"))
         self.ReportsCheckBox.setText(_translate("Searcher", "Reports"))
         self.FormsCheckBox.setText(_translate("Searcher", "Forms"))
-
