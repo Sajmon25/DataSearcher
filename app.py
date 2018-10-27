@@ -1,15 +1,17 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5 import QtCore, QtGui, QtWidgets
+from searcher_ui import Ui_Searcher
 
-class MainWindow
+class MainWindow(Ui_Searcher):
+    def __init__(self, dialog):
+        Ui_Searcher.__init__(self)
+        self.setupUi(dialog)
 
 if __name__ == '__main__':
+	app = QtWidgets.QApplication(sys.argv)
+	dialog = QtWidgets.QMainWindow()
 
-    app = QApplication(sys.argv)
+	prog = MainWindow(dialog)
 
-    w = QWidget()
-    w.resize(250, 150)
-    w.move(300, 300)
-    w.setWindowTitle('Pattern Searcher')
-    w.show()
-    sys.exit(app.exec_())
+	dialog.show()
+	sys.exit(app.exec_())
