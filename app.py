@@ -1,6 +1,10 @@
-import sys, os, paramiko
-import config.config as config
+import paramiko
+import sys
+
 from PyQt5 import QtWidgets
+
+import config.config as config
+
 from searcher_ui import Ui_Searcher
 
 
@@ -11,6 +15,7 @@ class MainWindow(Ui_Searcher):
         self.setupUi(dialog)
 
         self.SearchButton.clicked.connect(self.search)
+        self.ExitButton.clicked.connect(self.close_app)
 
     def search(self):
         ssh = paramiko.SSHClient()
@@ -18,6 +23,7 @@ class MainWindow(Ui_Searcher):
         ssh.connect(config.SERVER_CONFIG['host'], username=config.SERVER_CONFIG['username'], key_filename=config.SERVER_CONFIG['key_filename'])
         stdin, stdout, stderr = ssh.exec_command('pwd')
         print(stdout.readlines())
+
         ssh.close()
         # hostname = "poligonap01.fideltronik.com.pl"  # example
         # response = os.system("ping " + hostname)
@@ -28,6 +34,10 @@ class MainWindow(Ui_Searcher):
         # else:
         #     print(hostname, 'is down!')
         print("Searching..." + self.Pattern.text())
+
+    @staticmethod
+    def close_app():
+        print('Exit...')
 
 
 if __name__ == '__main__':
