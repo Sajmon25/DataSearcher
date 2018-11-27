@@ -4,7 +4,7 @@ import sys
 from PyQt5 import QtWidgets
 
 import config.config as config
-
+import search_utilites.search_utilities as Su
 from searcher_ui import Ui_Searcher
 
 
@@ -24,6 +24,8 @@ class MainWindow(Ui_Searcher):
         stdin, stdout, stderr = ssh.exec_command('pwd')
         print(stdout.readlines())
 
+        Search = Su.SearchUtility()
+        self.msg.insertPlainText(Search.find_pattern('test'))
         ssh.close()
         # hostname = "poligonap01.fideltronik.com.pl"  # example
         # response = os.system("ping " + hostname)
