@@ -22,10 +22,10 @@ class MainWindow(Ui_Searcher):
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(config.SERVER_CONFIG['host'], username=config.SERVER_CONFIG['username'], key_filename=config.SERVER_CONFIG['key_filename'])
         stdin, stdout, stderr = ssh.exec_command('pwd')
-        print(stdout.readlines())
+        # int(stdout.readlines())
 
         Search = Su.SearchUtility()
-        self.msg.insertPlainText(Search.find_pattern('test'))
+        self.msg.insertPlainText(Search.find_pattern(stdout.readlines()))
         ssh.close()
         # hostname = "poligonap01.fideltronik.com.pl"  # example
         # response = os.system("ping " + hostname)
