@@ -1,8 +1,10 @@
-import re
+import re, string
 
 class SearchUtility:
 
     def find_pattern(selfs, instance_handler, msg):
+
+        nonprintable = re.compile(b'[^%s]+' % re.escape(string.printable.encode('ascii')))
 
         folderList = instance_handler.listdir('/ORACLE/appl/fs1/EBSapps/appl/')
         folderList.sort()
@@ -14,14 +16,15 @@ class SearchUtility:
                         if re.match('^(XX)|(XC)', f):
                             isValid = False
                             report_lines = ""
-                            with instance_handler.open('/ORACLE/appl/fs1/EBSapps/appl/' + str(d) + '/12.0.0/reports/PL/' + str(f), 'r') as testFile:
-                                for line in testFile:
-                                    if (line.decode("utf-8").lower().find('attribute_category'.lower()) != -1):
-                                        report_lines += line
+                            with instance_handler.open('/ORACLE/appl/fs1/EBSapps/appl/' + str(d) + '/12.0.0/reports/PL/' + str(f), "rb") as testFile:
+                                for line in nonprintable.split(testFile.read()):
+                                    line = line.decode('UTF-8')
+                                    if (line.lower().find('B.BANK_ACCOUNT_ID'.lower()) != -1):
+                                        # report_lines += line
                                         isValid = True
 
                                     if isValid:
-                                        print(f)
+                                        # print(f)
                                         print(report_lines)
                                         msg.setPlaceholderText(report_lines)
 
