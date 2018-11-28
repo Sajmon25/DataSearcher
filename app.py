@@ -21,11 +21,12 @@ class MainWindow(Ui_Searcher):
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(config.SERVER_CONFIG['host'], username=config.SERVER_CONFIG['username'], key_filename=config.SERVER_CONFIG['key_filename'])
-        stdin, stdout, stderr = ssh.exec_command('pwd')
+        ftp = ssh.open_sftp()
+        # stdin, stdout, stderr = ssh.exec_command('pwd')
         # int(stdout.readlines())
 
         Search = Su.SearchUtility()
-        self.msg.insertPlainText(Search.find_pattern(stdout.readlines()))
+        Search.find_pattern(ftp, self.msg)
         ssh.close()
         # hostname = "poligonap01.fideltronik.com.pl"  # example
         # response = os.system("ping " + hostname)
