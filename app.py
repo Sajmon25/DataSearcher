@@ -20,15 +20,15 @@ class MainWindow(Ui_Searcher):
         conn = Connection()
         ftp = conn.get_ftp_connection()
         # get file path list
-        
+        search = Su.SearchUtility()
+        file_list = search.get_filepath_list(ftp)
         # analise files step by step and return output
-
+        
 
 
         # stdin, stdout, stderr = ssh.exec_command('pwd')
         # int(stdout.readlines())
-        search = Su.SearchUtility()
-        search.find_pattern(ftp, self.msg)
+
 
         # hostname = "poligonap01.fideltronik.com.pl"  # example
         # response = os.system("ping " + hostname)

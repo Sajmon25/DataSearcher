@@ -4,6 +4,8 @@ import string
 
 class SearchUtility:
 
+    filepath_list = []
+
     def find_pattern(self, instance_handler, msg):
 
         nonprintable = re.compile(b'[^%s]+' % re.escape(string.printable.encode('ascii')))
@@ -33,3 +35,25 @@ class SearchUtility:
 
         except Exception as e:
             print(e)
+
+    def get_filepath_list(self, instance_handler):
+
+        modules_list = instance_handler.listdir('/ORACLE/appl/fs1/EBSapps/appl/')
+        modules_list.sort()
+
+        try:
+            for module in modules_list:
+
+                dir_path = "/ORACLE/appl/fs1/EBSapps/appl/" + str(module) + "/12.0.0/reports/PL/"
+                try:
+                    file_list = instance_handler.listdir(dir_path)
+                    for file_name in file_list:
+                        if re.match('^(XX)|(XC)', file_name):
+                            self.filepath_list.append(dir_path + str(file_name))
+                except Exception:
+                    print(dir_path+" path doesn't exists.")
+
+        except Exception as e:
+            print(e)
+
+        return self.filepath_list
