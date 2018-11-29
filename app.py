@@ -18,6 +18,14 @@ class MainWindow(Ui_Searcher):
         self.ExitButton.clicked.connect(self.close_app)
 
     def search(self):
+
+        # connect to server
+
+        # get file path list
+
+        # analise files step by step and return output
+        
+
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(config.SERVER_CONFIG['host'], username=config.SERVER_CONFIG['username'], key_filename=config.SERVER_CONFIG['key_filename'])

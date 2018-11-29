@@ -1,32 +1,29 @@
-import re, string
+import re
+import string
+
 
 class SearchUtility:
 
-    def find_pattern(selfs, instance_handler, msg):
+    def find_pattern(self, instance_handler, msg):
 
         nonprintable = re.compile(b'[^%s]+' % re.escape(string.printable.encode('ascii')))
 
-        folderList = instance_handler.listdir('/ORACLE/appl/fs1/EBSapps/appl/')
-        folderList.sort()
+        folder_list = instance_handler.listdir('/ORACLE/appl/fs1/EBSapps/appl/')
+        folder_list.sort()
         try:
-            for d in folderList:
+            for d in folder_list:
                 print("Befor " + d)
                 try:
-                    fileList = instance_handler.listdir("/ORACLE/appl/fs1/EBSapps/appl/" + str(d) + "/12.0.0/reports/PL/")
-                    for f in fileList:
+                    file_list = instance_handler.listdir("/ORACLE/appl/fs1/EBSapps/appl/" + str(d) +
+                                                         "/12.0.0/reports/PL/")
+                    for f in file_list:
                         if re.match('^(XX)|(XC)', f):
-                            isValid = False
-                            report_lines = ""
                             print('File name: ' + f)
-                            with instance_handler.open('/ORACLE/appl/fs1/EBSapps/appl/' + str(d) + '/12.0.0/reports/PL/' + str(f), "rb") as testFile:
+                            with instance_handler.open('/ORACLE/appl/fs1/EBSapps/appl/' + str(d) + '/12.0.0/reports/PL/'
+                                                       + str(f), "rb") as testFile:
                                 for line in nonprintable.split(testFile.read()):
                                     line = line.decode('UTF-8')
-                                    if (line.lower().find('FND FLEXIDVAL'.lower()) != -1):
-                                        # report_lines += line
-                                        #isValid = True
-
-                                    #if isValid:
-                                        # print(f)
+                                    if line.lower().find('FND FLEXIDVAL'.lower()) != -1:
                                         print('Find line: ' + line)
                                         msg.setPlaceholderText(line)
 
