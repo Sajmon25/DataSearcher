@@ -38,6 +38,8 @@ class SearchUtility:
 
     def get_filepath_list(self, instance_handler):
 
+        filepath_list = []
+
         modules_list = instance_handler.listdir('/ORACLE/appl/fs1/EBSapps/appl/')
         modules_list.sort()
 
@@ -49,11 +51,11 @@ class SearchUtility:
                     file_list = instance_handler.listdir(dir_path)
                     for file_name in file_list:
                         if re.match('^(XX)|(XC)', file_name):
-                            self.filepath_list.append(dir_path + str(file_name))
+                            filepath_list.append(dir_path + str(file_name))
                 except Exception:
                     print(dir_path+" path doesn't exists.")
 
         except Exception as e:
             print(e)
 
-        return self.filepath_list
+        return filepath_list
