@@ -4,8 +4,6 @@ import string
 
 class SearchUtility:
 
-    filepath_list = []
-
     def find_pattern(self, instance_handler, msg):
 
         nonprintable = re.compile(b'[^%s]+' % re.escape(string.printable.encode('ascii')))
@@ -59,3 +57,16 @@ class SearchUtility:
             print(e)
 
         return filepath_list
+
+    def extract_str_from_bin(self, ih, file_path, pattern):
+
+        match_strings = ''
+        nonprintable = re.compile(b'[^%s]+' % re.escape(string.printable.encode('ascii')))
+
+        with ih.open(file_path, "rb") as testFile:
+            for line in nonprintable.split(testFile.read()):
+                line = line.decode('UTF-8')
+                if line.lower().find(pattern.lower()) != -1:
+                    match_strings += line+"\n"
+
+        return match_strings

@@ -1,5 +1,5 @@
 import sys
-import search_utilites.search_utilities as Su
+import search_utilites.search_utilities as su
 from PyQt5 import QtWidgets
 from searcher_ui import Ui_Searcher
 from Connection import Connection
@@ -21,27 +21,12 @@ class MainWindow(Ui_Searcher):
         ftp = conn.get_ftp_connection()
         # get file path list
         self.msg.appendPlainText('Create files list...')
-        file_list = Su.SearchUtility.get_filepath_list(self, ftp)
+
+        file_path_list = su.SearchUtility.get_filepath_list(self, ftp)
         # analise files step by step and return output
-        for file in file_list:
-            self.msg.appendPlainText("Analise file: "+file)
-
-
-        # stdin, stdout, stderr = ssh.exec_command('pwd')
-        # int(stdout.readlines())
-        # ftp = MainWindow.connect_to_server()
-        # Search = Su.SearchUtility()
-        # Search.find_pattern(ftp, self.msg)
-        # ssh.close()
-        # hostname = "poligonap01.fideltronik.com.pl"  # example
-        # response = os.system("ping " + hostname)
-        #
-        # # and then check the response...
-        # if response == 0:
-        #     print(hostname, 'is up!')
-        # else:
-        #     print(hostname, 'is down!')
-        print("Searching..." + self.Pattern.text())
+        for file_path in file_path_list:
+            self.msg.appendPlainText("Analise file: "+file_path)
+            self.msg.appendPlainText(su.SearchUtility.extract_str_from_bin(self, ftp, file_path, 'TRX_NUMBER'))
 
     @staticmethod
     def close_app():
