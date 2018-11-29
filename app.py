@@ -1,11 +1,8 @@
-import paramiko
 import sys
-
+from Connection import Connection
 from PyQt5 import QtWidgets
-
-import config.config as config
-import search_utilites.search_utilities as Su
 from searcher_ui import Ui_Searcher
+import search_utilites.search_utilities as Su
 
 
 class MainWindow(Ui_Searcher):
@@ -20,22 +17,19 @@ class MainWindow(Ui_Searcher):
     def search(self):
 
         # connect to server
-
+        conn = Connection()
+        ftp = conn.get_ftp_connection()
         # get file path list
-
-        # analise files step by step and return output
         
+        # analise files step by step and return output
 
-        ssh = paramiko.SSHClient()
-        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        ssh.connect(config.SERVER_CONFIG['host'], username=config.SERVER_CONFIG['username'], key_filename=config.SERVER_CONFIG['key_filename'])
-        ftp = ssh.open_sftp()
+
+
         # stdin, stdout, stderr = ssh.exec_command('pwd')
         # int(stdout.readlines())
+        search = Su.SearchUtility()
+        search.find_pattern(ftp, self.msg)
 
-        Search = Su.SearchUtility()
-        Search.find_pattern(ftp, self.msg)
-        ssh.close()
         # hostname = "poligonap01.fideltronik.com.pl"  # example
         # response = os.system("ping " + hostname)
         #
@@ -49,6 +43,8 @@ class MainWindow(Ui_Searcher):
     @staticmethod
     def close_app():
         print('Exit...')
+
+
 
 
 if __name__ == '__main__':
